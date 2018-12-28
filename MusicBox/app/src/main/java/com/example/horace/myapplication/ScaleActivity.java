@@ -2,6 +2,8 @@ package com.example.horace.myapplication;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,12 +27,17 @@ public class ScaleActivity extends AppCompatActivity {
     private  Musician musician;
     private  int Index=0;
     private int index;
+    private  Exam exam;
+    private ImageButton playbtn;
+    private Ui_Animator_Helper ui_animator_helper=new Ui_Animator_Helper();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scale);
 
+        playbtn=findViewById(R.id.sp1);
+        playbtn.setBackground(getResources().getDrawable(R.drawable.play));
         scaleTips=(ImageButton)findViewById(R.id.scaletip);
         menuBtn=(ImageButton)findViewById(R.id.menuBtn);
         testBtn=(ImageButton)findViewById(R.id.test);
@@ -42,6 +49,7 @@ public class ScaleActivity extends AppCompatActivity {
         imageButtons[5]=(ImageButton)findViewById(R.id.imageButton5);
         imageButtons[6]=(ImageButton)findViewById(R.id.imageButton6);
         imageButtons[7]=(ImageButton)findViewById(R.id.imageButton7);
+
 
 
         imageViews[0]=findViewById(R.id.imageView0);
@@ -63,6 +71,8 @@ public class ScaleActivity extends AppCompatActivity {
 
         scalePerformer=new ScalePerformer(this,imageButtons,imageViews);
         musician=new Musician(scalePerformer);
+        exam=new Exam(this,musician);
+
 
 
         final String[] items4 = new String[]{"小星星", "欢乐颂", "铃儿响叮当"};//创建item
@@ -104,16 +114,34 @@ public class ScaleActivity extends AppCompatActivity {
         testBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Toast.makeText(ScaleActivity.this, "现在测试的" + "歌曲是：" + items4[Index], Toast.LENGTH_SHORT).show();
-
+                exam.ExamSongsStart(Index);
             }
         });
 
 
-        findViewById(R.id.sp1).setOnClickListener(new View.OnClickListener() {
+        playbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ui_animator_helper.btnAnimation(v);
+
+
+
+                Handler handler=new Handler(){
+                    @Override
+                    public void handleMessage(Message msg) {
+                        super.handleMessage(msg);
+                        if(musician.GetFlag()==true){
+
+                            playbtn.setBackground(getResources().getDrawable(R.drawable.pause));}
+                        else {
+                            playbtn.setBackground(getResources().getDrawable(R.drawable.play));
+                        }
+                    }
+                };
+                handler.sendEmptyMessageDelayed(1, 220);
+
+
                 musician.PlaySongsIndex(Index);
             }
         });

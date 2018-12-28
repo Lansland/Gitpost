@@ -3,10 +3,13 @@ package com.example.horace.myapplication;
 
 import android.annotation.SuppressLint;
 import android.os.Message;
+
+import java.security.PublicKey;
+
 public class Musician {
     /*这个类负责整首音乐的播放，调用一个scalePerformer*/
     private ScalePerformer scalePerformer;
-    private  int Songs[][]=new int[3][];
+    private  static int Songs[][]=new int[3][];
     private  int IndexSongs=0,Index=0;
     public  Musician(ScalePerformer scalePerformer){
         this.scalePerformer=scalePerformer;
@@ -52,5 +55,9 @@ public class Musician {
     public  void Stop(){
         flag=false;
     }
+    public  int[][] GetSongs(){
+        return Songs;
+    }
+    public boolean GetFlag(){ return flag;}
 }
 

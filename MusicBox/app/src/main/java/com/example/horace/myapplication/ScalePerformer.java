@@ -19,6 +19,8 @@ public class ScalePerformer {
     private ImageButton[] imageButtons;
     private android.os.Handler handler;
     private ImageView imageView[];
+    private Ui_Animator_Helper ui_animator_helper=new Ui_Animator_Helper();
+    private Exam exam;
     @SuppressLint("HandlerLeak")
     public ScalePerformer(Activity runActivity, ImageButton[] imageButtons, ImageView[] imageViews){
         this.imageView=imageViews;
@@ -470,6 +472,7 @@ public class ScalePerformer {
                 Message message= new Message();
                 message.what=0;
                 handler.sendMessage(message);
+                exam.inputScale(message.what+1);
             }
         });
         imageButtons[1].setOnClickListener(new View.OnClickListener() {
@@ -478,6 +481,7 @@ public class ScalePerformer {
                 Message message= new Message();
                 message.what=1;
                 handler.sendMessage(message);
+                exam.inputScale(message.what+1);
             }
         });
         imageButtons[2].setOnClickListener(new View.OnClickListener() {
@@ -486,6 +490,7 @@ public class ScalePerformer {
                 Message message= new Message();
                 message.what=2;
                 handler.sendMessage(message);
+                exam.inputScale(message.what+1);
             }
         });
         imageButtons[3].setOnClickListener(new View.OnClickListener() {
@@ -494,6 +499,7 @@ public class ScalePerformer {
                 Message message= new Message();
                 message.what=3;
                 handler.sendMessage(message);
+                exam.inputScale(message.what+1);
             }
         });
         imageButtons[4].setOnClickListener(new View.OnClickListener() {
@@ -502,6 +508,7 @@ public class ScalePerformer {
                 Message message= new Message();
                 message.what=4;
                 handler.sendMessage(message);
+                exam.inputScale(message.what+1);
             }
         });
         imageButtons[5].setOnClickListener(new View.OnClickListener() {
@@ -510,6 +517,7 @@ public class ScalePerformer {
                 Message message= new Message();
                 message.what=5;
                 handler.sendMessage(message);
+                exam.inputScale(message.what+1);
             }
         });
         imageButtons[6].setOnClickListener(new View.OnClickListener() {
@@ -518,6 +526,7 @@ public class ScalePerformer {
                 Message message= new Message();
                 message.what=6;
                 handler.sendMessage(message);
+                exam.inputScale(message.what+1);
             }
         });
         imageButtons[7].setOnClickListener(new View.OnClickListener() {
@@ -526,11 +535,10 @@ public class ScalePerformer {
                 Message message= new Message();
                 message.what=7;
                 handler.sendMessage(message);
+                exam.inputScale(message.what+1);
             }
         });
-
     }
-
     private boolean btnEnabled=true;
     public void playScaleNumber(int i){
         try{
@@ -555,6 +563,7 @@ public class ScalePerformer {
             message.what=i;
             handler.sendMessage(message);
             imageView[i].setVisibility(View.VISIBLE);
+           ui_animator_helper.myAnimation(imageView[i]);
         }
         else if(i>0){
             try{

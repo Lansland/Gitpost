@@ -3,7 +3,9 @@ package com.example.horace.myapplication;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Message;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -34,6 +36,8 @@ class FlipperController {
             flipper.addView(imageViews[i]);
         }
         animation=new Animation[4];
+
+
         animation[0]=AnimationUtils.loadAnimation(runActivity,R.anim.slide_in_right);
         animation[1]=AnimationUtils.loadAnimation(runActivity,R.anim.slide_in_left);
         animation[2]=AnimationUtils.loadAnimation(runActivity,R.anim.slide_out_left);
@@ -66,18 +70,31 @@ class FlipperController {
                             if (Index < 0) {
                                 Index = images.length - 1;
                             }
+                            Log.d("Index:", "run: "+Index);
+
+
+
+
                         } else if (message.what == 1) {
                             flipper.showNext();
                             Index++;
                             if (Index == images.length) {
                                 Index = 0;
                             }
+                            Log.d("Index:", "run: "+Index);
+
+
+
+
+
+
                         }
 
 
                         Message message2 = new Message();
                         message2.what = 3;
                         sendMessageDelayed(message2, 1000);
+
                     }
                 };
                 thread.run();
@@ -94,6 +111,7 @@ class FlipperController {
 
     @SuppressLint("ClickableViewAccessibility")
     private  void initEvent(){
+
         flipper.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -152,5 +170,8 @@ class FlipperController {
                 }
             }
         });
+
     }
+
+
 }
